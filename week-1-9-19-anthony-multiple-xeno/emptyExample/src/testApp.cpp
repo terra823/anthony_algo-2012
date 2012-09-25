@@ -60,6 +60,12 @@ void testApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
+	
+	if (key == OF_KEY_RETURN) {
+		ofToggleFullscreen();
+
+	}
+
 
 }
 
