@@ -17,18 +17,19 @@ class particle{
 	ofVec2f vel;
 	ofVec2f frc;
     
-	float lifespanOver;
+//	float lifespanOver;
 
 	particle();
-//	virtual ~particle(){};
+	virtual ~particle(){};
 
 	void resetForce();
 	void addForce(float x, float y);
 	void addDampingForce();
 	void setInitialCondition(float px, float py, float vx, float vy);
+	void addSpin(float x, float y);
 	
 	
-	bool setParticleLifespan(float lifespanOver);
+//	bool setParticleLifespan(float lifespanOver);
 
 	
 	void update();

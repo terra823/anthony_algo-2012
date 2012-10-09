@@ -13,7 +13,7 @@
 //------------------------------------------------------------
 particle::particle(){
 	setInitialCondition(0, 0, 0, 0);
-	damping = 0.01f;
+	damping = 0.07f;
 }
 
 
@@ -32,6 +32,12 @@ void particle::addForce(float x, float y){
 
 
 //------------------------------------------------------------
+void particle::addSpin(float x, float y){
+	float sinOfTime = sin( ofGetElapsedTimef() * 10 );
+	float sinOfTimeMapped = ofMap( sinOfTime, -1, 1, -10, 10);
+}
+
+//------------------------------------------------------------
 void particle::addDampingForce(){
 	frc.x = frc.x - vel.x * damping;
 	frc.y = frc.y - vel.y * damping;
@@ -45,18 +51,18 @@ void particle::setInitialCondition(float px, float py, float vx, float vy){
 }
 
 //------------------------------------------------------------
-bool particle::setParticleLifespan(float lifespanOver){
-
-	if (lifespanOver = ofGetElapsedTimef()+420.0f) {
-		return TRUE;
-	}
-	else {
-		return FALSE;
-	}
-	
-	
-	
-}
+//bool particle::setParticleLifespan(float lifespanOver){
+//
+//	if (lifespanOver = ofGetElapsedTimef()+420.0f) {
+//		return TRUE;
+//	}
+//	else {
+//		return FALSE;
+//	}
+//	
+//	
+//	
+//}
 
 
 //------------------------------------------------------------
@@ -68,5 +74,16 @@ void particle::update(){
 
 //------------------------------------------------------------
 void particle::draw(){
-	ofCircle(pos.x, pos.y, 3);
+	
+	if (vel.x + vel.y >2.3){
+		ofSetColor(255- 10 *(vel.x*vel.y), 155 - 10 *(vel.x*vel.y), 25 - 10 * (vel.x*vel.y), (vel.x*vel.y)*20 );
+		ofCircle(pos.x, pos.y, 1.5);
+	}
+	
+	else if (vel.x < 1 || vel.y <1) {
+		ofSetColor(250 - 30 *(vel.x*vel.y), 150 - 30 *(vel.x*vel.y), 20 - 5 * (vel.x*vel.y), (vel.x*vel.y)*20 );
+		ofCircle(pos.x, pos.y, 1.5);
+	}
+	
+	
 }

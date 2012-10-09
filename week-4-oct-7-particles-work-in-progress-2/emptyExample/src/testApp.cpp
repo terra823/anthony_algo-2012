@@ -1,75 +1,86 @@
 #include "testApp.h"
 
+
 //--------------------------------------------------------------
-void testApp::setup(){
-	ofSetVerticalSync(TRUE);
-	ofSetFrameRate(30);
+void testApp::setup(){	
 	
-	for (int i = 0; i < 10000; i++){
+	ofSetVerticalSync(true);
+	ofSetFrameRate(60);
+	ofBackground(10, 10, 30);
+	ofEnableAlphaBlending();
+	
+	for (int i = 0; i < 5000; i++){
 		particle myParticle;
-		float vx = ofRandom(-4, 4);
-		float vy = ofRandom(-4, 4);
-		
-		myParticle.setInitialCondition(300, 300, vx, vy);
+		float vx = ofRandom(-15,15);
+		float vy = ofRandom(-15,15);
+		myParticle.setInitialCondition(300,300,vx, vy);
+		myParticle.addSpin(30, 30);
+
+		// more interesting with diversity :)
+		// uncomment this: 
+		myParticle.damping = ofRandom(0.01, 0.05);
 		particles.push_back(myParticle);
-		
 	}
 	
-		
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-	for( int i = 0; i < particles.size(); i++){
+	
+	// on every frame 
+	// we reset the forces
+	// add in any forces on the particle
+	// perfom damping and
+	// then update
+	
+	
+	for (int i = 0; i < particles.size(); i++){
 		particles[i].resetForce();
+		particles[i].addForce(0,0.04);  // gravity
 		particles[i].addDampingForce();
 		particles[i].update();
-		
-	
-	if (particles[i].setParticleLifespan(420.0f) == TRUE)
-
-		particles.erase(particles.begin());
 	}
+	
 }
-
 
 //--------------------------------------------------------------
 void testApp::draw(){
+	
 	ofSetColor(0x000000);
 	
-	for (int i = 0; i < particles.size(); i++) {
+	for (int i = 0; i < particles.size(); i++){
 		particles[i].draw();
 	}
+	
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key){
-
+void testApp::keyPressed  (int key){ 
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
-
+void testApp::keyReleased  (int key){ 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y){
-
+void testApp::mouseMoved(int x, int y ){
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-	for (int x; x < particles.size(); x++) {
-		float vx = ofRandom(-4, 4);
-		float vy = ofRandom(-4, 4);
-		particles[x].setInitialCondition(mouseX, mouseY, vx, vy);
+	for (int i = 0; i < particles.size(); i++){
+		float vx = ofRandom(-15,15);
+		float vy = ofRandom(-15,15);
+		particles[i].setInitialCondition(mouseX,mouseY,vx, vy);	
+		
 	}
+
 }
+
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
